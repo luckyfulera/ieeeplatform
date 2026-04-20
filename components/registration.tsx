@@ -1,4 +1,7 @@
-import { CreditCard, Users, GraduationCap, Briefcase, Globe, Building2 } from 'lucide-react';
+'use client';
+
+import { CreditCard, Users, GraduationCap, Briefcase, Globe, Building2, CheckCircle, Send } from 'lucide-react';
+import { useState, FormEvent } from 'react';
 
 export default function Registration() {
   const indianFees = [
@@ -174,12 +177,270 @@ export default function Registration() {
           </p>
         </div>
 
-        <div className="text-center">
-          <button className="px-10 py-4 bg-primary text-white font-bold text-lg rounded-xl hover:bg-primary/90">
-            Register Now →
-          </button>
-        </div>
+        <RegistrationForm />
       </div>
     </section>
+  );
+}
+
+function RegistrationForm() {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    institution: '',
+    designation: '',
+    category: '',
+    paperTitle: '',
+    authors: '',
+    country: '',
+    paymentRef: '',
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    console.log('Registration submitted:', formData);
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        institution: '',
+        designation: '',
+        category: '',
+        paperTitle: '',
+        authors: '',
+        country: '',
+        paymentRef: '',
+      });
+    }, 3000);
+  };
+
+  const categories = [
+    'Non-IEEE Professional (Indian)',
+    'IEEE Professional Members (Indian)',
+    'Non-IEEE Students (Indian)',
+    'IEEE Student Members (Indian)',
+    'Attendees/Co-Author (Indian)',
+    'Non-IEEE Professional (International)',
+    'IEEE Professional Members (International)',
+    'Non-IEEE Students (International)',
+    'IEEE Student Members (International)',
+    'Attendees/Co-Author (International)',
+  ];
+
+  if (submitted) {
+    return (
+      <div className="p-8 rounded-2xl bg-primary/10 border border-primary/20 text-center">
+        <div className="flex justify-center mb-4">
+          <CheckCircle size={64} className="text-primary" />
+        </div>
+        <h3 className="text-2xl font-bold text-foreground mb-2">Registration Successful!</h3>
+        <p className="text-foreground/70 mb-4">
+          Thank you for registering for AIDIS-SM 2027. We have received your registration details.
+        </p>
+        <p className="text-foreground/60 text-sm">
+          A confirmation email will be sent to {formData.email} shortly.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-8 rounded-2xl bg-card border border-border">
+      <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center space-x-2">
+        <Send size={24} className="text-primary" />
+        <span>Conference Registration Form</span>
+      </h3>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label htmlFor="fullName" className="block text-sm font-semibold text-foreground">
+              Full Name *
+            </label>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:outline-none"
+              placeholder="Dr. John Smith"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="email" className="block text-sm font-semibold text-foreground">
+              Email Address *
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:outline-none"
+              placeholder="john.smith@university.edu"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="phone" className="block text-sm font-semibold text-foreground">
+              Phone Number *
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:outline-none"
+              placeholder="+91 9876543210"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="country" className="block text-sm font-semibold text-foreground">
+              Country *
+            </label>
+            <input
+              type="text"
+              id="country"
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:outline-none"
+              placeholder="India"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="institution" className="block text-sm font-semibold text-foreground">
+              Institution/Organization *
+            </label>
+            <input
+              type="text"
+              id="institution"
+              name="institution"
+              value={formData.institution}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:outline-none"
+              placeholder="Graphic Era Hill University"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="designation" className="block text-sm font-semibold text-foreground">
+              Designation *
+            </label>
+            <input
+              type="text"
+              id="designation"
+              name="designation"
+              value={formData.designation}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:outline-none"
+              placeholder="Professor / Student / Researcher"
+            />
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <label htmlFor="category" className="block text-sm font-semibold text-foreground">
+              Registration Category *
+            </label>
+            <select
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:outline-none"
+            >
+              <option value="">Select your category</option>
+              {categories.map((cat, index) => (
+                <option key={index} value={cat}>{cat}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <label htmlFor="paperTitle" className="block text-sm font-semibold text-foreground">
+              Paper Title (if applicable)
+            </label>
+            <input
+              type="text"
+              id="paperTitle"
+              name="paperTitle"
+              value={formData.paperTitle}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:outline-none"
+              placeholder="Enter your paper title (leave blank if attendee only)"
+            />
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <label htmlFor="authors" className="block text-sm font-semibold text-foreground">
+              Co-Authors (if any)
+            </label>
+            <textarea
+              id="authors"
+              name="authors"
+              value={formData.authors}
+              onChange={handleChange}
+              rows={2}
+              className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:outline-none resize-none"
+              placeholder="List co-authors separated by commas"
+            />
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <label htmlFor="paymentRef" className="block text-sm font-semibold text-foreground">
+              Payment Reference/Transaction ID *
+            </label>
+            <input
+              type="text"
+              id="paymentRef"
+              name="paymentRef"
+              value={formData.paymentRef}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:outline-none"
+              placeholder="Enter your payment transaction reference number"
+            />
+            <p className="text-xs text-foreground/60">
+              Please complete payment to the bank account listed above and enter the transaction reference here.
+            </p>
+          </div>
+        </div>
+
+        <div className="pt-4 border-t border-border">
+          <p className="text-sm text-foreground/70 mb-4">
+            By submitting this form, you confirm that you have read and agree to the conference terms and conditions.
+            All registration fees are non-refundable.
+          </p>
+          <button
+            type="submit"
+            className="w-full px-8 py-4 bg-primary text-white font-bold text-lg rounded-xl hover:bg-primary/90"
+          >
+            Submit Registration
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
