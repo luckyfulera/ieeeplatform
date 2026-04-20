@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
@@ -20,10 +21,14 @@ export default function Navbar() {
     <nav className="fixed top-0 w-full z-50 bg-background border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">AI</span>
-            </div>
+          <Link href="/" className="flex items-center space-x-3">
+            <Image
+              src="/ieee-logo.png"
+              alt="IEEE Logo"
+              width={80}
+              height={32}
+              className="h-8 w-auto"
+            />
             <span className="hidden sm:block font-bold text-lg text-primary">
               AIDIS-SM 2027
             </span>
